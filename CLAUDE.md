@@ -67,4 +67,4 @@ uv run mlflow server --host 127.0.0.1 --port 5000 --backend-store-uri sqlite:///
 ```
 
 ## Current status (update when it changes)
-Phase 1 in progress: 1.1 schema + loader done. Next: download Sparkov, 1.2 synthetic generator (`synth.py`).
+Phase 1 in progress: 1.1 schema + loader, 1.2 synth generator done; data loaded; infra up. Next: 1.3 time split.

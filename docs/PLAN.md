@@ -30,9 +30,9 @@ Tick boxes as you go. Claude Code: only the current phase; ideas go to "Later".
 
 ## Phase 1: Data, EDA, baselines (Oct 12 – Oct 31, light mode, ~5 sessions)
 Goal: an honest offline baseline with leak-free evaluation.
-- [ ] Kaggle account + API token; download Sparkov (`docs/DATA.md`) into `data/raw/`
+- [x] Kaggle account + API token; download Sparkov (`docs/DATA.md`) into `data/raw/`
 - [x] `fraudshield/schema.py`: canonical `Transaction` (pydantic) + Sparkov column mapping; `data.py` converts CSV → Parquet with dtypes
-- [ ] `synth.py`: a tiny generator in the same schema with injectable fraud patterns (bursts, far-away merchant, unusual amount) for tests
+- [x] `synth.py`: a tiny generator in the same schema with injectable fraud patterns (bursts, far-away merchant, unusual amount) for tests
 - [ ] EDA notebook: fraud rate over time, by category/hour/amount; findings written to `docs/DATA.md`
 - [ ] Time split: train / validation / test by `trans_time` (e.g. first 70% of days / next 15% / last 15%), with a test asserting no overlap
 - [ ] Baselines on **stateless** features (amount, hour, day-of-week, category, age, city_pop): rules, logistic regression, LightGBM

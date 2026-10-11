@@ -45,6 +45,10 @@ Alternatively download the zip from the Kaggle page in a browser and unzip it in
 Synthetic generators often fail to preserve real behavioural fraud patterns (see the 2026 benchmark
 paper linked below), so results show the engineering approach, not real-world performance.
 
+### Loaded (Oct 11)
+`uv run python -m fraudshield.data --sample 0.1`: 1,852,394 rows, 999 cards, fraud rate 0.521%,
+2019-01-01 → 2020-12-31. 10% card sample: 185,182 rows, 100 cards. About 15 s on the laptop.
+
 ## EDA findings
 _(fill in during Phase 1)_
 

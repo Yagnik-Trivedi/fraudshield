@@ -4,6 +4,20 @@ Newest entry on top.
 
 ---
 
+## 2026-10-11: Phase 1 · infra verified, data loaded, 1.2 synthetic generator
+**Done**
+- Docker Desktop + WSL2 installed; `docker compose up -d`: Redis PONG, Postgres ready, Console HTTP 200, Redpanda healthy
+- Real data loaded: 1,852,394 rows, 999 cards, 0.521% fraud (details in DATA.md)
+- `synth.py`: cards with home location, habitual categories, spend level, daily rhythm; fraud patterns
+  burst / far_away / unusual_amount / new_category; deterministic by seed; emits Sparkov columns → `to_canonical`
+- `tests/test_synth.py` (8 tests); suite 17 passed
+
+**Next**
+- 1.3 time split + leakage tests
+
+**Open issues**
+- Compose images still use `latest` tags; pin them once stable
+
 ## 2026-10-11: Phase 1 · 1.1 schema + loader
 **Done**
 - `schema.py`: pydantic `Transaction` + Sparkov→canonical column map (tx_id, card_id, merchant_id, amount, lon...)
@@ -20,7 +34,7 @@ Newest entry on top.
 - `git init` + first commit
 
 **Open issues**
-- Docker Desktop not installed: compose (Redpanda Console, Redis PING) not verified yet. Not needed until Phase 3.
+- ~~Docker Desktop not installed~~ (resolved same day)
 
 ## 2026-10-11: Project started (Phase 0)
 **Done**
