@@ -16,7 +16,7 @@ Alternatively download the zip from the Kaggle page in a browser and unzip it in
 ### Columns (verify against the files after download)
 | Column | Use |
 |---|---|
-| `trans_date_trans_time`, `unix_time` | event time (use one consistently; document which) |
+| `trans_date_trans_time` → `event_time` | event time. `unix_time` is offset from it in this dataset, so it is dropped |
 | `cc_num` | card id → entity key for behavioural features |
 | `merchant`, `category` | merchant id / category |
 | `amt` | amount |

@@ -4,6 +4,15 @@ Newest entry on top.
 
 ---
 
+## 2026-10-11: Phase 1 · 1.1 schema + loader
+**Done**
+- `schema.py`: pydantic `Transaction` + Sparkov→canonical column map (tx_id, card_id, merchant_id, amount, lon...)
+- `data.py`: raw CSVs → canonical, sorted by (event_time, tx_id) → `transactions.parquet`; `--sample 0.1` card-level sample
+- `tests/test_data.py` (6 tests, in-memory CSV fixture)
+
+**Next**
+- Kaggle token + download Sparkov, then `uv run python -m fraudshield.data --sample 0.1`; 1.2 synthetic generator
+
 ## 2026-10-11: First session (setup)
 **Done**
 - Moved `setup/` files into `.claude/commands/`, `.github/workflows/ci.yml`, `.pre-commit-config.yaml`; deleted `setup/`
