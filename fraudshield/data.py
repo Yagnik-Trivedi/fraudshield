@@ -48,6 +48,42 @@ def card_sample(df: pd.DataFrame, frac: float, seed: int) -> pd.DataFrame:
     return df[df["card_id"].isin(keep)].reset_index(drop=True)
 
 
+def time_split(
+    df: pd.DataFrame, train: float = 0.70, valid: float = 0.15
+) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    """Split by calendar day: first `train` of the days, next `valid`, the rest is test.
+
+    Splitting on day boundaries (never mid-day, never at random) means every validation row is later than
+    every training row, and every test row later than every validation row.
+    """
+    day = df["event_time"].dt.normalize()
+    days = day.drop_duplicates().sort_values().to_numpy()
+    n_train, n_valid = round(len(days) * train), round(len(days) * (train + valid))
+    if not 0 < n_train < n_valid < len(days):
+        raise ValueError(f"{len(days)} days is too few to split {train}/{valid}/rest")
+    valid_start, test_start = days[n_train], days[n_valid]
+    return (
+        df[day < valid_start].reset_index(drop=True),
+        df[(day >= valid_start) & (day < test_start)].reset_index(drop=True),
+        df[day >= test_start].reset_index(drop=True),
+    )
+
+
+def split_summary(splits: dict[str, pd.DataFrame]) -> pd.DataFrame:
+    """Rows, date range and fraud rate per split."""
+    return pd.DataFrame(
+        {
+            name: {
+                "rows": len(s),
+                "start": s["event_time"].min(),
+                "end": s["event_time"].max(),
+                "fraud_rate": s["is_fraud"].mean(),
+            }
+            for name, s in splits.items()
+        }
+    ).T
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
@@ -65,6 +101,8 @@ def main() -> None:
         f"transactions.parquet: {len(df):,} rows, {df['card_id'].nunique():,} cards, "
         f"fraud rate {df['is_fraud'].mean():.4%}, {df['event_time'].min()} .. {df['event_time'].max()}"
     )
+
+    print(split_summary(dict(zip(("train", "valid", "test"), time_split(df), strict=True))))
 
     if args.sample:
         sample = card_sample(df, args.sample, s.random_seed)

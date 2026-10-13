@@ -49,6 +49,17 @@ paper linked below), so results show the engineering approach, not real-world pe
 `uv run python -m fraudshield.data --sample 0.1`: 1,852,394 rows, 999 cards, fraud rate 0.521%,
 2019-01-01 → 2020-12-31. 10% card sample: 185,182 rows, 100 cards. About 15 s on the laptop.
 
+### Time split (Oct 13, `data.time_split`, 70/15/15 of calendar days)
+| Split | Rows | From | To | Fraud rate |
+|---|---|---|---|---|
+| train | 1,226,927 | 2019-01-01 | 2020-05-26 | 0.579% |
+| valid | 301,468 | 2020-05-27 | 2020-09-12 | 0.468% |
+| test | 323,999 | 2020-09-13 | 2020-12-31 | 0.350% |
+
+The fraud rate falls over time, so the test set has fewer positives than train. PR-AUC depends on the base
+rate, so test PR-AUC will look lower than validation PR-AUC even for the same model. Compare PR-AUC to the
+split's base rate, and choose thresholds on validation.
+
 ## EDA findings
 _(fill in during Phase 1)_
 

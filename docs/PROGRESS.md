@@ -4,6 +4,15 @@ Newest entry on top.
 
 ---
 
+## 2026-10-13: Phase 1 · 1.3 time split
+**Done**
+- `data.time_split` (calendar-day boundaries, 70/15/15) + `split_summary`; the loader prints the split table
+- `tests/test_split.py` (5 tests on synth data): no overlap, day boundaries, lossless + ordered, fraud rate, too-few-days error; suite 22 passed
+- Real data: train 0.579% → valid 0.468% → test 0.350% fraud (table in DATA.md)
+
+**Next**
+- 1.4 EDA notebook (needs the `notebooks` extra: `uv sync --extra notebooks`)
+
 ## 2026-10-11: Phase 1 · infra verified, data loaded, 1.2 synthetic generator
 **Done**
 - Docker Desktop + WSL2 installed; `docker compose up -d`: Redis PONG, Postgres ready, Console HTTP 200, Redpanda healthy

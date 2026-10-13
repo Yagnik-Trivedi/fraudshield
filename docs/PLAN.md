@@ -34,7 +34,7 @@ Goal: an honest offline baseline with leak-free evaluation.
 - [x] `fraudshield/schema.py`: canonical `Transaction` (pydantic) + Sparkov column mapping; `data.py` converts CSV → Parquet with dtypes
 - [x] `synth.py`: a tiny generator in the same schema with injectable fraud patterns (bursts, far-away merchant, unusual amount) for tests
 - [ ] EDA notebook: fraud rate over time, by category/hour/amount; findings written to `docs/DATA.md`
-- [ ] Time split: train / validation / test by `trans_time` (e.g. first 70% of days / next 15% / last 15%), with a test asserting no overlap
+- [x] Time split: train / validation / test by `trans_time` (e.g. first 70% of days / next 15% / last 15%), with a test asserting no overlap
 - [ ] Baselines on **stateless** features (amount, hour, day-of-week, category, age, city_pop): rules, logistic regression, LightGBM
 - [ ] `evaluate.py`: PR-AUC, ROC-AUC (secondary), recall@1%FPR, precision@k (k = daily analyst capacity), PR curve plot
 - [ ] MLflow tracking (local server, SQLite backend) logging params, metrics, plots, model
