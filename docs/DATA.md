@@ -61,7 +61,27 @@ rate, so test PR-AUC will look lower than validation PR-AUC even for the same mo
 split's base rate, and choose thresholds on validation.
 
 ## EDA findings
-_(fill in during Phase 1)_
+From `notebooks/01_eda.ipynb` (10% card sample: 185,182 rows, 100 cards, 968 fraud, base rate 0.523%).
+These describe the Sparkov generator, not real fraud.
+
+1. **Time of day is the strongest single signal.** 22:00–03:59 holds 83% of all fraud. In those hours 1.87% of
+   transactions are fraud, against 0.114% in the other hours (about 16×). 22:00 and 23:00 alone are about 2.4%.
+2. **Amount separates fraud sharply.** Median fraud amount is $341 against $49 for legit transactions. Above $300 the
+   fraud rate is 8–20%; in $50–100 it is almost zero (5 of 57k). The relationship isn't monotonic (there's a
+   fraud bump at $10–50), so trees should handle it better than a linear model on raw amount.
+3. **Four categories carry most of the risk.** shopping_net (1.5%), grocery_pos (1.3%) and misc_net (1.3%) are about 2.5× the
+   base rate, and gas_transport and shopping_pos are about at the base rate. health_fitness, food_dining, home and entertainment are under 0.2%.
+4. **Distance from home is useless in Sparkov.** Merchant coordinates are jitter within about 150 km of home for
+   every transaction, and the fraud rate is flat across all distance deciles (0.44–0.62%). Phase 2's
+   distance features (km from last tx, impossible travel) will likely add nothing on this dataset; keep them
+   for the parity and engineering story, but don't expect lift, and say so in the README.
+5. **Fraud arrives in short episodes per card.** 99 of 100 cards get hit once: a median of 10 fraud transactions spread
+   over about 45 h. Consecutive fraud transactions are a median 69 min apart, against 272 min between legit ones. That
+   supports 1 h and 24 h velocity features, and 10 min windows less so. Almost every card being hit is a generator
+   artefact; real fraud is far rarer per card.
+6. **Fraud rate drifts down over time** (monthly 0.18–1.04%; Dec 2020 is the lowest at 0.18%), so train → test
+   base rate goes from 0.58% to 0.35% (see Time split). Age is weak (65+ is 0.83%, 35–50 is 0.39%). Gender and day of week
+   are roughly flat.
 
 ## References
 - Fraud Dataset Benchmark (IEEE-CIS, Sparkov, ccfraud): https://arxiv.org/pdf/2208.14417

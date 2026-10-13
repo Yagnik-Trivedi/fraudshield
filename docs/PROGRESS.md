@@ -4,6 +4,19 @@ Newest entry on top.
 
 ---
 
+## 2026-10-13: Phase 1 · 1.4 EDA notebook
+**Done**
+- `notebooks/01_eda.ipynb` (executed, outputs saved): monthly rate, category, hour, amount, distance from home,
+  age/gender/day of week, per-card fraud episodes
+- Six findings in DATA.md. Key ones: night hours hold 83% of fraud; amount over $300 is 8–20% fraud; distance from home is
+  flat (no signal in Sparkov); fraud comes in episodes of about 10 tx over about 45 h per card
+
+**Next**
+- 1.5 evaluate.py + baselines + MLflow
+
+**Notes**
+- Notebook needs `uv sync --extra notebooks` (a plain `uv sync` removes jupyter again)
+
 ## 2026-10-13: Phase 1 · 1.3 time split
 **Done**
 - `data.time_split` (calendar-day boundaries, 70/15/15) + `split_summary`; the loader prints the split table
